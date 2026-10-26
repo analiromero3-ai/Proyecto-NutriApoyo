@@ -46,7 +46,11 @@
    - **2.1 Definición del problema y alcance (Anemia de 0 a 15 años)**
 la atención del apoyo alimentario a menores de 0 a 15 años con anemia en la región Piura se realiza de forma manual y dispersa. Esto retrasa la respuesta a las familias, impide aplicar de manera uniforme los criterios para decidir quién califica y no deja trazabilidad de lo que se entrega.
 
-   - 2.2 Requerimientos funcionales y no funcionales (Formularios y Recetas)
+   - **2.2 Requerimientos funcionales y no funcionales (Formularios y Recetas)**
+   - - **2.2.1 Requerimientos funcionales**
+     
+Se definen 25 requerimientos funcionales, agrupados en cinco módulos: captación de solicitudes mediante formularios, validación de criterios médicos, gestión de paquetes nutricionales, catálogo de recetas y administración y control.
+
      
      Tabla 1. Diagnóstico operativo y respuesta de NutriApoyo
 
@@ -58,6 +62,7 @@ la atención del apoyo alimentario a menores de 0 a 15 años con anemia en la re
 | Entrega y seguimiento | Entregas sin registro centralizado. | Falta de trazabilidad y de indicadores de cobertura. | Registro de entrega y reportes de gestión (RF-16, RF-23). |
 | Orientación nutricional | Información sobre recetas con hierro dispersa y poco accesible. | Familias sin guía para continuar la alimentación en casa. | Catálogo público de recetas y contenido educativo (RF-18 a RF-20). |
 | Protección de datos | Datos personales y de salud del menor en documentos físicos o sin control de acceso. | Riesgo de exposición de información sensible. | Control de acceso por roles, cifrado y auditoría (RNF-02 a RNF-07). |
+
    - 2.3 Matriz de priorización MoSCOW
    - 2.4 Especificación de Casos de Uso y Diagrama UML
 3. **Diseño del Sistema**
