@@ -47,6 +47,17 @@
 la atención del apoyo alimentario a menores de 0 a 15 años con anemia en la región Piura se realiza de forma manual y dispersa. Esto retrasa la respuesta a las familias, impide aplicar de manera uniforme los criterios para decidir quién califica y no deja trazabilidad de lo que se entrega.
 
    - 2.2 Requerimientos funcionales y no funcionales (Formularios y Recetas)
+     
+     Tabla 1. Diagnóstico operativo y respuesta de NutriApoyo
+
+| Dimensión | Situación identificada | Consecuencia | Respuesta de NutriApoyo |
+| --- | --- | --- | --- |
+| Captación de solicitudes | Recepción dispersa, sin un formato único y con trámites en papel. | Pérdida de información y demoras en la atención. | Formulario digital único de solicitud y postulación (RF-01 a RF-07). |
+| Verificación médica | Criterios de elegibilidad aplicados sin un registro estandarizado del diagnóstico. | Decisiones inconsistentes entre casos similares. | Validación de criterios médicos y decisión registrada (RF-09, RF-10). |
+| Asignación del apoyo | No hay una relación explícita entre la edad del menor y la composición del paquete. | Paquetes poco adecuados al grupo etario. | Paquetes nutricionales definidos por grupo etario (RF-13, RF-15). |
+| Entrega y seguimiento | Entregas sin registro centralizado. | Falta de trazabilidad y de indicadores de cobertura. | Registro de entrega y reportes de gestión (RF-16, RF-23). |
+| Orientación nutricional | Información sobre recetas con hierro dispersa y poco accesible. | Familias sin guía para continuar la alimentación en casa. | Catálogo público de recetas y contenido educativo (RF-18 a RF-20). |
+| Protección de datos | Datos personales y de salud del menor en documentos físicos o sin control de acceso. | Riesgo de exposición de información sensible. | Control de acceso por roles, cifrado y auditoría (RNF-02 a RNF-07). |
    - 2.3 Matriz de priorización MoSCOW
    - 2.4 Especificación de Casos de Uso y Diagrama UML
 3. **Diseño del Sistema**
