@@ -407,6 +407,17 @@ Las siguientes fichas conservan los campos y el contenido registrado en el docum
 Se presentan cuatro diagramas, uno por grupo funcional, para que cada uno sea legible. En ellos, el rectángulo es el límite del sistema; los óvalos son casos de uso; las figuras humanas son actores; la línea continua une al actor con el caso de uso que ejecuta; la flecha punteada «include» indica que el caso de uso de origen siempre ejecuta al de destino; y la flecha punteada «extend» indica que el caso de uso de origen amplía al de destino solo cuando se cumple una condición.
 
 ![Diagrama de NutriApoyo](DIAGRAMA1.png)
+*Figura 1. Casos de uso de solicitudes, evaluación y seguimiento*
+
+![Diagrama de NutriApoyo](DIAGRAMA2.png)
+*Figura 2. Casos de uso de paquetes nutricionales, inventario y entregas*
+
+![Diagrama de NutriApoyo](DIAGRAMA3.png)
+*Figura 3. Casos de uso del catálogo de recetas*
+
+![Diagrama de NutriApoyo](DIAGRAMA4.png)
+*Figura 4. Casos de uso de administración y control*
+
 
 3. **Diseño del Sistema**
    - 3.1 Modelado de Procesos de Negocio en BPMN (AS-IS y TO-BE)
