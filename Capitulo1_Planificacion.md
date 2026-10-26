@@ -43,7 +43,9 @@
    - 1.2 Lienzo Lean Canvas reestructurado
    - 1.3 Cronograma de actividades (Gantt) y WBS
 2. **Análisis del Sistema**
-   - 2.1 Definición del problema y alcance (Anemia de 0 a 15 años)
+   - **2.1 Definición del problema y alcance (Anemia de 0 a 15 años)**
+la atención del apoyo alimentario a menores de 0 a 15 años con anemia en la región Piura se realiza de forma manual y dispersa. Esto retrasa la respuesta a las familias, impide aplicar de manera uniforme los criterios para decidir quién califica y no deja trazabilidad de lo que se entrega.
+
    - 2.2 Requerimientos funcionales y no funcionales (Formularios y Recetas)
    - 2.3 Matriz de priorización MoSCOW
    - 2.4 Especificación de Casos de Uso y Diagrama UML
