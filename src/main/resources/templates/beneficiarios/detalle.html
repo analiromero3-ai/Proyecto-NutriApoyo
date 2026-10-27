@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Detalle | NutriApoyo</title><link rel="stylesheet" th:href="@{/css/estilos.css}"></head>
+<body>
+<header class="barra-superior"><a class="logo" th:href="@{/inicio}">NutriApoyo</a><form th:action="@{/logout}" method="post"><input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"><button class="boton-secundario" type="submit">Cerrar sesión</button></form></header>
+<main class="contenido">
+    <div class="cabecera-pagina"><div><p class="etiqueta">Detalle de beneficiario</p><h1 th:text="${beneficiario.nombreCompleto}"></h1></div><div class="acciones-formulario"><a class="boton-enlace secundario" th:href="@{/beneficiarios}">Volver</a><a class="boton-enlace" th:href="@{/beneficiarios/{id}/editar(id=${beneficiario.id})}">Editar</a></div></div>
+    <dl class="detalle">
+        <div><dt>Fecha de nacimiento</dt><dd th:text="${#temporals.format(beneficiario.fechaNacimiento, 'dd/MM/yyyy')}"></dd></div>
+        <div><dt>Sexo</dt><dd th:text="${beneficiario.sexo != null ? beneficiario.sexo.nombreVisible : 'No registrado'}"></dd></div>
+        <div><dt>Documento</dt><dd th:text="${beneficiario.numeroDocumento ?: 'No registrado'}"></dd></div>
+        <div><dt>Distrito</dt><dd th:text="${beneficiario.distrito}"></dd></div>
+        <div class="ancho-completo"><dt>Dirección</dt><dd th:text="${beneficiario.direccion}"></dd></div>
+        <div><dt>Tutor o apoderado</dt><dd th:text="${beneficiario.tutorNombres}"></dd></div>
+        <div><dt>Relación</dt><dd th:text="${beneficiario.relacionTutor}"></dd></div>
+        <div><dt>Teléfono</dt><dd th:text="${beneficiario.tutorTelefono}"></dd></div>
+        <div><dt>Correo</dt><dd th:text="${beneficiario.tutorCorreo ?: 'No registrado'}"></dd></div>
+        <div><dt>Estado</dt><dd th:text="${beneficiario.estado.nombreVisible}"></dd></div>
+        <div><dt>Fecha de registro</dt><dd th:text="${#temporals.format(beneficiario.fechaRegistro, 'dd/MM/yyyy')}"></dd></div>
+        <div><dt>Usuario responsable</dt><dd th:text="${beneficiario.usuarioResponsable ?: 'No registrado'}"></dd></div>
+        <div class="ancho-completo"><dt>Observaciones administrativas</dt><dd th:text="${beneficiario.observaciones ?: 'Sin observaciones'}"></dd></div>
+    </dl>
+</main>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Postular | NutriApoyo</title><link rel="stylesheet" th:href="@{/css/estilos.css}"></head>
+<body>
+<header class="barra-superior"><a class="logo" th:href="@{/inicio}">NutriApoyo</a><a class="enlace-claro" th:href="@{/seguimiento}">Consultar solicitud</a></header>
+<main class="contenido">
+    <div class="cabecera-pagina"><div><p class="etiqueta">Postulación de apoyo nutricional</p><h1>Registrar solicitud</h1><p class="texto-secundario">Complete los datos declarados. Esta información será revisada manualmente.</p></div></div>
+    <form class="formulario-beneficiario" th:action="@{/solicitudes}" method="post" enctype="multipart/form-data">
+        <div th:object="${beneficiario}"><div class="alerta alerta-error" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.globalErrors()}" th:text="${error}"></div>
+        <fieldset class="seccion-formulario"><legend>Datos del menor</legend><div class="rejilla-formulario">
+            <div class="grupo-formulario"><label for="nombres">Nombres *</label><input id="nombres" th:field="*{nombres}" required maxlength="80"><p class="error-campo" th:errors="*{nombres}"></p></div>
+            <div class="grupo-formulario"><label for="apellidos">Apellidos *</label><input id="apellidos" th:field="*{apellidos}" required maxlength="80"><p class="error-campo" th:errors="*{apellidos}"></p></div>
+            <div class="grupo-formulario"><label for="fechaNacimiento">Fecha de nacimiento *</label><input id="fechaNacimiento" type="date" th:field="*{fechaNacimiento}" required><p class="error-campo" th:errors="*{fechaNacimiento}"></p></div>
+            <div class="grupo-formulario"><label for="sexo">Sexo</label><select id="sexo" th:field="*{sexo}"><option value="">No especificado</option><option th:each="item : ${sexos}" th:value="${item}" th:text="${item.nombreVisible}"></option></select></div>
+            <div class="grupo-formulario"><label for="tipoDocumento">Tipo de documento</label><select id="tipoDocumento" th:field="*{tipoDocumento}"><option value="">No registrado</option><option th:each="item : ${tiposDocumento}" th:value="${item}" th:text="${item.nombreVisible}"></option></select></div>
+            <div class="grupo-formulario"><label for="numeroDocumento">Número de documento</label><input id="numeroDocumento" th:field="*{numeroDocumento}" maxlength="20"><p class="error-campo" th:errors="*{numeroDocumento}"></p></div>
+            <div class="grupo-formulario ancho-completo"><label for="direccion">Dirección *</label><input id="direccion" th:field="*{direccion}" required maxlength="180"><p class="error-campo" th:errors="*{direccion}"></p></div>
+            <div class="grupo-formulario"><label for="distrito">Distrito *</label><input id="distrito" th:field="*{distrito}" required maxlength="80"><p class="error-campo" th:errors="*{distrito}"></p></div>
+        </div></fieldset>
+        <fieldset class="seccion-formulario"><legend>Datos del tutor o apoderado</legend><div class="rejilla-formulario">
+            <div class="grupo-formulario"><label for="tutorNombres">Nombres y apellidos *</label><input id="tutorNombres" th:field="*{tutorNombres}" required maxlength="160"><p class="error-campo" th:errors="*{tutorNombres}"></p></div>
+            <div class="grupo-formulario"><label for="relacionTutor">Relación *</label><input id="relacionTutor" th:field="*{relacionTutor}" required maxlength="60"><p class="error-campo" th:errors="*{relacionTutor}"></p></div>
+            <div class="grupo-formulario"><label for="tutorTelefono">Teléfono *</label><input id="tutorTelefono" th:field="*{tutorTelefono}" required maxlength="20" inputmode="tel"><p class="error-campo" th:errors="*{tutorTelefono}"></p></div>
+            <div class="grupo-formulario"><label for="tutorCorreo">Correo</label><input id="tutorCorreo" type="email" th:field="*{tutorCorreo}" maxlength="120"><p class="error-campo" th:errors="*{tutorCorreo}"></p></div>
+        </div></fieldset></div>
+        <div th:object="${solicitud}"><div class="alerta alerta-error" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.globalErrors()}" th:text="${error}"></div>
+        <fieldset class="seccion-formulario"><legend>Información declarada</legend><p class="nota">El sistema registra esta información para revisión. No genera diagnósticos médicos.</p><div class="rejilla-formulario">
+            <div class="grupo-formulario"><label for="nivelHemoglobina">Hemoglobina declarada</label><input id="nivelHemoglobina" type="number" step="0.1" min="0" th:field="*{nivelHemoglobina}"><p class="error-campo" th:errors="*{nivelHemoglobina}"></p></div>
+            <div class="grupo-formulario"><label for="fechaMedicion">Fecha de medición</label><input id="fechaMedicion" type="date" th:field="*{fechaMedicion}"><p class="error-campo" th:errors="*{fechaMedicion}"></p></div>
+            <div class="grupo-formulario"><label for="establecimientoSalud">Establecimiento de salud</label><input id="establecimientoSalud" th:field="*{establecimientoSalud}" maxlength="150"></div>
+            <div class="grupo-formulario"><label for="condicionAnemia">Condición declarada</label><select id="condicionAnemia" th:field="*{condicionAnemia}"><option value="">Seleccione</option><option th:each="item : ${condiciones}" th:value="${item}" th:text="${item.nombreVisible}"></option></select></div>
+            <div class="grupo-formulario ancho-completo"><label for="observacionesSolicitud">Observaciones</label><textarea id="observacionesSolicitud" th:field="*{observacionesSolicitud}" rows="3" maxlength="1000"></textarea></div>
+            <div class="grupo-formulario ancho-completo"><label for="documento">Documento de respaldo</label><input id="documento" name="documento" type="file" accept="application/pdf,image/png,image/jpeg"><small>Opcional. PDF, PNG o JPG; máximo 5 MB.</small></div>
+            <div class="grupo-formulario ancho-completo"><label><input type="checkbox" th:field="*{consentimientoDatos}" required> Autorizo el tratamiento de los datos personales y de salud únicamente para gestionar esta solicitud. *</label><p class="error-campo" th:errors="*{consentimientoDatos}"></p></div>
+        </div></fieldset></div>
+        <div class="acciones-formulario"><button type="submit">Enviar solicitud</button><a class="boton-enlace secundario" th:href="@{/seguimiento}">Consultar estado</a></div>
+    </form>
+</main>
+</body>
+</html>

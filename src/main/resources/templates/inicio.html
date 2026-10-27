@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio | NutriApoyo</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<header class="barra-superior">
+    <a class="logo" th:href="@{/inicio}">NutriApoyo</a>
+    <form th:action="@{/logout}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <button class="boton-secundario" type="submit">Cerrar sesión</button>
+    </form>
+</header>
+<main class="contenido">
+    <p class="etiqueta">Panel principal</p>
+    <h1>Hola, <span sec:authentication="name">usuario</span></h1>
+    <p class="texto-secundario">Selecciona un módulo disponible según el rol asignado.</p>
+    <section class="rejilla-modulos">
+        <article sec:authorize="hasAnyRole('ADMINISTRADOR', 'EVALUADOR')">
+            <h2>Beneficiarios</h2>
+            <p>Registra, consulta, busca y actualiza los datos administrativos.</p>
+            <a class="boton-enlace" th:href="@{/beneficiarios}">Gestionar beneficiarios</a>
+        </article>
+        <article sec:authorize="!hasAnyRole('ADMINISTRADOR', 'EVALUADOR')"><h2>Beneficiarios</h2><p>Disponible para administradores y evaluadores.</p></article>
+        <article><h2>Solicitudes</h2><p>Registra una postulación o consulta su estado mediante el código de seguimiento.</p><a class="boton-enlace" th:href="@{/solicitudes/nueva}">Nueva solicitud</a></article>
+        <article sec:authorize="hasAnyRole('ADMINISTRADOR', 'EVALUADOR')"><h2>Evaluaciones</h2><p>Revisa solicitudes y registra decisiones manuales.</p><a class="boton-enlace" th:href="@{/evaluaciones}">Ir a evaluación</a></article>
+        <article><h2>Recetas y entregas</h2><p>Próximas etapas del proyecto.</p></article>
+    </section>
+</main>
+</body>
+</html>

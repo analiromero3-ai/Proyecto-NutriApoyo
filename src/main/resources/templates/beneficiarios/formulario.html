@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo + ' | NutriApoyo'}">Beneficiario | NutriApoyo</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<header class="barra-superior"><a class="logo" th:href="@{/inicio}">NutriApoyo</a><form th:action="@{/logout}" method="post"><input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"><button class="boton-secundario" type="submit">Cerrar sesión</button></form></header>
+<main class="contenido">
+    <div class="cabecera-pagina"><div><p class="etiqueta">Gestión administrativa</p><h1 th:text="${titulo}"></h1></div><a class="boton-enlace secundario" th:href="@{/beneficiarios}">Volver al listado</a></div>
+    <form class="formulario-beneficiario" th:object="${beneficiario}" th:action="${beneficiario.id == null} ? @{/beneficiarios} : @{/beneficiarios/{id}(id=${beneficiario.id})}" method="post">
+        <fieldset class="seccion-formulario"><legend>Datos del menor</legend><div class="rejilla-formulario">
+            <div class="grupo-formulario"><label for="nombres">Nombres *</label><input id="nombres" th:field="*{nombres}" required maxlength="80"><p class="error-campo" th:errors="*{nombres}"></p></div>
+            <div class="grupo-formulario"><label for="apellidos">Apellidos *</label><input id="apellidos" th:field="*{apellidos}" required maxlength="80"><p class="error-campo" th:errors="*{apellidos}"></p></div>
+            <div class="grupo-formulario"><label for="fechaNacimiento">Fecha de nacimiento *</label><input id="fechaNacimiento" type="date" th:field="*{fechaNacimiento}" required><p class="error-campo" th:errors="*{fechaNacimiento}"></p></div>
+            <div class="grupo-formulario"><label for="sexo">Sexo</label><select id="sexo" th:field="*{sexo}"><option value="">No especificado</option><option th:each="item : ${sexos}" th:value="${item}" th:text="${item.nombreVisible}"></option></select></div>
+            <div class="grupo-formulario"><label for="tipoDocumento">Tipo de documento</label><select id="tipoDocumento" th:field="*{tipoDocumento}"><option value="">No registrado</option><option th:each="item : ${tiposDocumento}" th:value="${item}" th:text="${item.nombreVisible}"></option></select></div>
+            <div class="grupo-formulario"><label for="numeroDocumento">Número de documento</label><input id="numeroDocumento" th:field="*{numeroDocumento}" maxlength="20"><p class="error-campo" th:errors="*{numeroDocumento}"></p></div>
+            <div class="grupo-formulario ancho-completo"><label for="direccion">Dirección *</label><input id="direccion" th:field="*{direccion}" required maxlength="180"><p class="error-campo" th:errors="*{direccion}"></p></div>
+            <div class="grupo-formulario"><label for="distrito">Distrito *</label><input id="distrito" th:field="*{distrito}" required maxlength="80"><p class="error-campo" th:errors="*{distrito}"></p></div>
+            <div class="grupo-formulario"><label for="estado">Estado *</label><select id="estado" th:field="*{estado}" required><option th:each="item : ${estados}" th:value="${item}" th:text="${item.nombreVisible}"></option></select></div>
+        </div></fieldset>
+        <fieldset class="seccion-formulario"><legend>Datos del tutor o apoderado</legend><div class="rejilla-formulario">
+            <div class="grupo-formulario"><label for="tutorNombres">Nombres y apellidos *</label><input id="tutorNombres" th:field="*{tutorNombres}" required maxlength="160"><p class="error-campo" th:errors="*{tutorNombres}"></p></div>
+            <div class="grupo-formulario"><label for="relacionTutor">Relación con el menor *</label><input id="relacionTutor" th:field="*{relacionTutor}" required maxlength="60"><p class="error-campo" th:errors="*{relacionTutor}"></p></div>
+            <div class="grupo-formulario"><label for="tutorDocumento">Documento</label><input id="tutorDocumento" th:field="*{tutorDocumento}" maxlength="20"></div>
+            <div class="grupo-formulario"><label for="tutorTelefono">Teléfono *</label><input id="tutorTelefono" th:field="*{tutorTelefono}" required maxlength="20" inputmode="tel"><p class="error-campo" th:errors="*{tutorTelefono}"></p></div>
+            <div class="grupo-formulario ancho-completo"><label for="tutorCorreo">Correo electrónico</label><input id="tutorCorreo" type="email" th:field="*{tutorCorreo}" maxlength="120"><p class="error-campo" th:errors="*{tutorCorreo}"></p></div>
+        </div></fieldset>
+        <fieldset class="seccion-formulario"><legend>Información complementaria</legend><div class="rejilla-formulario"><div class="grupo-formulario ancho-completo"><label for="observaciones">Observaciones administrativas</label><textarea id="observaciones" th:field="*{observaciones}" rows="4" maxlength="500"></textarea><p class="error-campo" th:errors="*{observaciones}"></p></div></div></fieldset>
+        <div class="acciones-formulario"><button type="submit">Guardar cambios</button><a class="boton-enlace secundario" th:href="@{/beneficiarios}">Cancelar</a></div>
+    </form>
+</main>
+</body>
+</html>

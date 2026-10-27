@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beneficiarios | NutriApoyo</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<header class="barra-superior">
+    <a class="logo" th:href="@{/inicio}">NutriApoyo</a>
+    <form th:action="@{/logout}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <button class="boton-secundario" type="submit">Cerrar sesión</button>
+    </form>
+</header>
+<main class="contenido">
+    <div class="cabecera-pagina">
+        <div><p class="etiqueta">Gestión administrativa</p><h1>Beneficiarios</h1></div>
+        <a class="boton-enlace" th:href="@{/beneficiarios/nuevo}">Registrar beneficiario</a>
+    </div>
+
+    <p class="alerta alerta-exito" th:if="${exito}" th:text="${exito}"></p>
+
+    <form class="filtros" th:action="@{/beneficiarios}" method="get">
+        <div class="campo"><label for="termino">Buscar</label><input id="termino" name="termino" th:value="${termino}" placeholder="Nombre o documento"></div>
+        <div class="campo"><label for="estado">Estado</label><select id="estado" name="estado"><option value="">Todos</option><option th:each="item : ${estados}" th:value="${item}" th:text="${item.nombreVisible}" th:selected="${item == estadoSeleccionado}"></option></select></div>
+        <div class="campo"><label for="distrito">Distrito</label><select id="distrito" name="distrito"><option value="">Todos</option><option th:each="item : ${distritos}" th:value="${item}" th:text="${item}" th:selected="${item == distritoSeleccionado}"></option></select></div>
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <div class="vacio" th:if="${#lists.isEmpty(beneficiarios)}">No se encontraron beneficiarios con los criterios indicados.</div>
+    <div class="tabla-contenedor" th:unless="${#lists.isEmpty(beneficiarios)}">
+        <table class="tabla-datos">
+            <thead><tr><th>Beneficiario</th><th>Edad</th><th>Distrito</th><th>Estado</th><th>Registro</th><th>Acciones</th></tr></thead>
+            <tbody>
+            <tr th:each="beneficiario : ${beneficiarios}">
+                <td th:text="${beneficiario.nombreCompleto}"></td>
+                <td th:text="${T(java.time.Period).between(beneficiario.fechaNacimiento, T(java.time.LocalDate).now()).years + ' años'}"></td>
+                <td th:text="${beneficiario.distrito}"></td>
+                <td><span class="estado" th:classappend="${beneficiario.estado.name() == 'ACTIVO'} ? ' estado-activo' : ' estado-inactivo'" th:text="${beneficiario.estado.nombreVisible}"></span></td>
+                <td th:text="${#temporals.format(beneficiario.fechaRegistro, 'dd/MM/yyyy')}"></td>
+                <td class="acciones-tabla"><a th:href="@{/beneficiarios/{id}(id=${beneficiario.id})}">Ver</a><a th:href="@{/beneficiarios/{id}/editar(id=${beneficiario.id})}">Editar</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>
