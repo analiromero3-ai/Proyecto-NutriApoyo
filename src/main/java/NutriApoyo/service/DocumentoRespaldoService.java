@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
@@ -48,7 +48,11 @@ public class DocumentoRespaldoService {
             if (!destino.startsWith(directorioDocumentos)) {
                 throw new IllegalArgumentException("La ruta del documento no es válida.");
             }
-            Files.copy(archivo.getInputStream(), destino, StandardCopyOption.REPLACE_EXISTING);
+            byte[] contenido = archivo.getBytes();
+            if (!coincideConTipoDeclarado(contenido, tipoContenido)) {
+                throw new IllegalArgumentException("El contenido del documento no coincide con el tipo indicado.");
+            }
+            Files.write(destino, contenido);
             return new DocumentoGuardado(nombreAlmacenado, tipoContenido);
         } catch (IOException excepcion) {
             throw new IllegalStateException("No se pudo guardar el documento de respaldo.", excepcion);
@@ -61,6 +65,21 @@ public class DocumentoRespaldoService {
             throw new IllegalArgumentException("No se encontró el documento solicitado.");
         }
         return new FileSystemResource(archivo);
+    }
+
+    private boolean coincideConTipoDeclarado(byte[] contenido, String tipoContenido) {
+        if ("application/pdf".equals(tipoContenido)) {
+            return comienzaCon(contenido, new byte[] {'%', 'P', 'D', 'F', '-'});
+        }
+        if ("image/png".equals(tipoContenido)) {
+            return comienzaCon(contenido, new byte[] {(byte) 0x89, 'P', 'N', 'G', 0x0D, 0x0A, 0x1A, 0x0A});
+        }
+        return "image/jpeg".equals(tipoContenido)
+                && comienzaCon(contenido, new byte[] {(byte) 0xFF, (byte) 0xD8, (byte) 0xFF});
+    }
+
+    private boolean comienzaCon(byte[] contenido, byte[] firma) {
+        return contenido.length >= firma.length && Arrays.equals(Arrays.copyOf(contenido, firma.length), firma);
     }
 
     public record DocumentoGuardado(String nombre, String tipoContenido) { }

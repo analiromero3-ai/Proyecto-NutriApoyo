@@ -6,6 +6,7 @@
 <main class="contenido">
     <div class="cabecera-pagina"><div><p class="etiqueta">Postulación de apoyo nutricional</p><h1>Registrar solicitud</h1><p class="texto-secundario">Complete los datos declarados. Esta información será revisada manualmente.</p></div></div>
     <form class="formulario-beneficiario" th:action="@{/solicitudes}" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <div th:object="${beneficiario}"><div class="alerta alerta-error" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.globalErrors()}" th:text="${error}"></div>
         <fieldset class="seccion-formulario"><legend>Datos del menor</legend><div class="rejilla-formulario">
             <div class="grupo-formulario"><label for="nombres">Nombres *</label><input id="nombres" th:field="*{nombres}" required maxlength="80"><p class="error-campo" th:errors="*{nombres}"></p></div>

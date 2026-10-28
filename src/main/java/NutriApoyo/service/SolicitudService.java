@@ -64,9 +64,16 @@ public class SolicitudService {
     }
 
     @Transactional(readOnly = true)
-    public Solicitud consultarPorCodigo(String codigo) {
-        return solicitudRepository.findByCodigoSeguimiento(StringUtils.upperCase(StringUtils.trim(codigo), Locale.ROOT))
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró una solicitud con ese código."));
+    public Solicitud consultarPorCodigo(String codigo, String numeroDocumento) {
+        Solicitud solicitud = solicitudRepository
+                .findByCodigoSeguimiento(StringUtils.upperCase(StringUtils.trim(codigo), Locale.ROOT))
+                .orElseThrow(() -> new IllegalArgumentException("No se encontró una solicitud con esos datos."));
+        String documentoConsultado = StringUtils.trimToNull(numeroDocumento);
+        String documentoBeneficiario = StringUtils.trimToNull(solicitud.getBeneficiario().getNumeroDocumento());
+        if (documentoConsultado == null || !documentoConsultado.equals(documentoBeneficiario)) {
+            throw new IllegalArgumentException("No se encontró una solicitud con esos datos.");
+        }
+        return solicitud;
     }
 
     @Transactional(readOnly = true)

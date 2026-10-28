@@ -18,9 +18,10 @@ La primera etapa implementa el inicio de sesión personalizado, usuarios con rol
 ## Configurar MySQL
 
 1. Cree la base de datos local: `CREATE DATABASE nutriapoyo CHARACTER SET utf8mb4;`.
-2. Ejecute [schema-nutriapoyo.sql](src/main/resources/db/schema-nutriapoyo.sql).
-3. Defina las variables de entorno `NUTRIAPOYO_DB_USERNAME` y `NUTRIAPOYO_DB_PASSWORD`. Si la URL no es la predeterminada, defina también `NUTRIAPOYO_DB_URL`.
-4. Para crear el primer administrador solo una vez, defina `NUTRIAPOYO_USUARIO_INICIAL_HABILITADO=true` junto con `NUTRIAPOYO_USUARIO_INICIAL_NOMBRES`, `NUTRIAPOYO_USUARIO_INICIAL_APELLIDOS`, `NUTRIAPOYO_USUARIO_INICIAL_CORREO` y `NUTRIAPOYO_USUARIO_INICIAL_CONTRASENA`.
+2. Para una instalación nueva, ejecute en este orden: [schema-nutriapoyo.sql](src/main/resources/db/schema-nutriapoyo.sql), [V2__crear_tabla_beneficiarios.sql](src/main/resources/db/V2__crear_tabla_beneficiarios.sql) y [V3__crear_tabla_solicitudes.sql](src/main/resources/db/V3__crear_tabla_solicitudes.sql).
+3. Para una base ya existente, ejecute solamente los scripts `V*` que correspondan a tablas aún no creadas. Todos usan `CREATE TABLE IF NOT EXISTS` y no eliminan datos.
+4. Defina las variables de entorno `NUTRIAPOYO_DB_USERNAME` y `NUTRIAPOYO_DB_PASSWORD`. Si la URL no es la predeterminada, defina también `NUTRIAPOYO_DB_URL`.
+5. Para crear el primer administrador solo una vez, defina `NUTRIAPOYO_USUARIO_INICIAL_HABILITADO=true` junto con `NUTRIAPOYO_USUARIO_INICIAL_NOMBRES`, `NUTRIAPOYO_USUARIO_INICIAL_APELLIDOS`, `NUTRIAPOYO_USUARIO_INICIAL_CORREO` y `NUTRIAPOYO_USUARIO_INICIAL_CONTRASENA`.
 
 La contraseña nunca se almacena en texto plano: Spring Security la protege con BCrypt. Después de crear el primer usuario, quite o desactive las variables `NUTRIAPOYO_USUARIO_INICIAL_*`.
 
@@ -45,7 +46,7 @@ Ejecute una vez [V3__crear_tabla_solicitudes.sql](src/main/resources/db/V3__crea
 
 Los adjuntos aceptan PDF, PNG o JPG de hasta 5 MB y se almacenan fuera de las vistas públicas en `datos/documentos/` por defecto; la ruta puede cambiarse con `NUTRIAPOYO_DOCUMENTOS_RUTA`. La carpeta está excluida de Git.
 
-La evaluación es manual. El sistema solo muestra los valores declarados y no aplica criterios clínicos automáticos, porque el informe no define los umbrales necesarios.
+La consulta pública de seguimiento requiere el código generado y el documento del menor. La evaluación es manual: el sistema solo muestra los valores declarados y no aplica criterios clínicos automáticos, porque el informe no define los umbrales necesarios.
 
 ## Reportes previstos
 

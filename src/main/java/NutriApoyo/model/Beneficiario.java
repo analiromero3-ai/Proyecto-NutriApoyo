@@ -1,5 +1,11 @@
 package NutriApoyo.model;
 
+import java.time.LocalDate;
+import java.time.Period;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -10,17 +16,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import org.apache.commons.lang3.StringUtils;
-
-import java.time.LocalDate;
-import java.time.Period;
 
 @Entity
 @Table(name = "beneficiarios")
@@ -42,6 +44,7 @@ public class Beneficiario {
 
     @NotNull(message = "La fecha de nacimiento es obligatoria.")
     @PastOrPresent(message = "La fecha de nacimiento no puede estar en el futuro.")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "fecha_nacimiento", nullable = false)
     private LocalDate fechaNacimiento;
 
@@ -98,7 +101,8 @@ public class Beneficiario {
 
     @NotNull
     @Column(name = "fecha_registro", nullable = false)
-    private LocalDate fechaRegistro;
+    // Se genera en el servidor antes de validar el formulario; no llega desde la vista.
+    private LocalDate fechaRegistro = LocalDate.now();
 
     @Size(max = 120)
     @Column(name = "usuario_responsable", length = 120)
@@ -173,6 +177,7 @@ public class Beneficiario {
     public EstadoBeneficiario getEstado() { return estado; }
     public void setEstado(EstadoBeneficiario estado) { this.estado = estado; }
     public LocalDate getFechaRegistro() { return fechaRegistro; }
+    public void asignarFechaRegistroServidor(LocalDate fechaRegistro) { this.fechaRegistro = fechaRegistro; }
     public String getUsuarioResponsable() { return usuarioResponsable; }
     public void setUsuarioResponsable(String usuarioResponsable) { this.usuarioResponsable = usuarioResponsable; }
     public String getObservaciones() { return observaciones; }

@@ -5,7 +5,7 @@
 <header class="barra-superior"><a class="logo" th:href="@{/inicio}">NutriApoyo</a><a class="enlace-claro" th:href="@{/solicitudes/nueva}">Nueva solicitud</a></header>
 <main class="contenido"><div class="cabecera-pagina"><div><p class="etiqueta">Seguimiento</p><h1>Consultar solicitud</h1></div></div>
     <p class="alerta alerta-exito" th:if="${codigo}">Solicitud registrada. Guarde este código: <strong th:text="${codigo}"></strong></p>
-    <form class="filtros filtros-cortos" th:action="@{/seguimiento}" method="get"><div class="campo"><label for="codigo">Código de seguimiento</label><input id="codigo" name="codigo" required placeholder="SOL-2026-XXXXXXXX"></div><button type="submit">Consultar</button></form>
+    <form class="filtros filtros-cortos" th:action="@{/seguimiento}" method="get"><div class="campo"><label for="codigo">Código de seguimiento</label><input id="codigo" name="codigo" required placeholder="SOL-2026-XXXXXXXX"></div><div class="campo"><label for="documento">Documento del menor</label><input id="documento" name="documento" required maxlength="20"></div><button type="submit">Consultar</button></form>
     <p class="alerta alerta-error" th:if="${error}" th:text="${error}"></p>
     <section class="detalle" th:if="${solicitud}"><div><dt>Código</dt><dd th:text="${solicitud.codigoSeguimiento}"></dd></div><div><dt>Estado</dt><dd th:text="${solicitud.estado.nombreVisible}"></dd></div><div><dt>Fecha de registro</dt><dd th:text="${#temporals.format(solicitud.fechaSolicitud, 'dd/MM/yyyy HH:mm')}"></dd></div><div><dt>Resultado de evaluación</dt><dd th:text="${solicitud.motivoEvaluacion ?: 'Aún no registrado'}"></dd></div></section>
 </main>

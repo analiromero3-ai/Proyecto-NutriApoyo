@@ -64,10 +64,13 @@ public class SolicitudController {
     }
 
     @GetMapping("/seguimiento")
-    public String consultarEstado(@RequestParam(required = false) String codigo, Model model) {
+    public String consultarEstado(
+            @RequestParam(required = false) String codigo,
+            @RequestParam(required = false) String documento,
+            Model model) {
         if (codigo != null && !codigo.isBlank()) {
             try {
-                model.addAttribute("solicitud", solicitudService.consultarPorCodigo(codigo));
+                model.addAttribute("solicitud", solicitudService.consultarPorCodigo(codigo, documento));
             } catch (IllegalArgumentException excepcion) {
                 model.addAttribute("error", excepcion.getMessage());
             }

@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -40,6 +41,10 @@ public class BeneficiarioService {
     @Transactional
     public Beneficiario registrar(Beneficiario beneficiario, String usuarioResponsable) {
         validarDocumentoUnico(beneficiario.getNumeroDocumento(), null);
+        // Protección adicional para registros creados desde código, no solo desde MVC.
+        if (beneficiario.getFechaRegistro() == null) {
+            beneficiario.asignarFechaRegistroServidor(LocalDate.now());
+        }
         beneficiario.setUsuarioResponsable(usuarioResponsable);
         return beneficiarioRepository.save(beneficiario);
     }
